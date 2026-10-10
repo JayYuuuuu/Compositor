@@ -12,7 +12,7 @@ This is an independent community Simplified Chinese fork, not an official upstre
 
 这是 [JayYuuuuu/Compositor](https://github.com/JayYuuuuu/Compositor) 的社区汉化分支，基于 [robbietilton/Compositor](https://github.com/robbietilton/Compositor)，继续采用 MIT 许可并保留原作者声明。
 
-**当前状态：已实现首批简体中文支持，首个独立社区测试版正在验收。** Homebrew 命令安装的是上游原版；社区安装包使用上面的 Releases 入口。
+**当前状态：首个独立社区测试版 [v1.4.9-cn.1](https://github.com/JayYuuuuu/Compositor/releases/tag/v1.4.9-cn.1) 已发布，保留英文并提供首批简体中文支持。** Homebrew 命令安装的是上游原版；社区安装包使用上面的 Releases 入口。
 
 目标是保留英文并增加简体中文界面，持续跟进上游更新。汉化范围、实现约束、版本记录和验收要求见 [汉化维护文档](docs/localization-maintenance.md)。本分支独立维护；上游目前不接受翻译 PR，不向上游提交汉化 PR。
 
