@@ -67,7 +67,7 @@ final class LocalizationUITests: XCTestCase {
             file.click()
             app.menuItems[label("Import Images…", "导入图像…")].click()
             choosePath(input.path, in: app)
-            clickPanelButton(["Open", "Import", "打开", "导入"], in: app)
+            confirmFilePanel(in: app)
             let count = app.staticTexts["layerCount"]
             let imported = NSPredicate(format: "value == %@", "2")
             expectation(for: imported, evaluatedWith: count)
@@ -94,7 +94,7 @@ final class LocalizationUITests: XCTestCase {
             file.click()
             app.menuItems[label("Open Project…", "打开项目…")].click()
             choosePath(project.path, in: app)
-            clickPanelButton(["Open", "打开"], in: app)
+            confirmFilePanel(in: app)
             expectation(for: imported, evaluatedWith: app.staticTexts["layerCount"])
             waitForExpectations(timeout: 10)
             XCTAssertEqual(app.staticTexts["canvasDimensions"].value as? String, "64 × 32 px")
@@ -109,8 +109,9 @@ final class LocalizationUITests: XCTestCase {
     }
 
     @MainActor
-    private func clickPanelButton(_ labels: [String], in app: XCUIApplication) {
-        let button = app.buttons.matching(NSPredicate(format: "label IN %@", labels)).firstMatch
+    private func confirmFilePanel(in app: XCUIApplication) {
+        // Native file-panel buttons expose a title, not a SwiftUI label; their stable ID holds in either language.
+        let button = app.buttons["OKButton"]
         XCTAssertTrue(button.waitForExistence(timeout: 5))
         button.click()
     }
@@ -123,6 +124,6 @@ final class LocalizationUITests: XCTestCase {
         field.click()
         field.typeKey("a", modifierFlags: .command)
         field.typeText(name)
-        clickPanelButton(["Save", "存储", "保存"], in: app)
+        confirmFilePanel(in: app)
     }
 }
