@@ -1,7 +1,7 @@
-# Compositor 社区汉化分支
+# Compositor CN 社区汉化分支
 
-项目规约见 [AGENTS.md](AGENTS.md)，汉化目标、进度、跟进上游和发布前提见 [docs/localization-maintenance.md](docs/localization-maintenance.md)。修改前先读这两份文档；重要决定与验证结果写入项目文档，供其他会话继续维护。
+项目规约见 [AGENTS.md](AGENTS.md)，当前汉化、社区测试版、自动维护和验证状态见 [docs/localization-maintenance.md](docs/localization-maintenance.md)。
 
-首批源码汉化已实现：保留英文，增加简体中文菜单、工具栏、图层面板、常用弹窗和导入/导出流程。使用 Apple 字符串目录，系统决定应用语言，不改项目存储格式和内部标识。macOS 构建与中英文相关回归已通过；正式沙箱运行、完整窗口交互与中文排版仍待验收，没有发布安装包。上游目前不接受翻译 PR，本分支独立维护。
+已获用户确认：独立名称 Compositor CN，与原版共存，更新来自本 fork；首发为 ad-hoc 签名的社区测试版，不宣称 Apple Developer ID 签名或公证。自动跟进、翻译和发布在私有后台运行；公开仓库只保留应用源码、资源、验证和安装包。当前目录有 793 条中英文资源。
 
-DeepSeek 增量翻译工具和固定术语规则已接入，生成待审核候选，不覆盖现有译文；操作与实测费用见维护文档。定时跟进上游尚未启用。
+私有维护交接只在未跟踪的 CLAUDE.local.md；不存在时向维护者获取，不能自行恢复上游发布脚本。上游目前不接受翻译 PR，本分支独立维护。

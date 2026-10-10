@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8F311F98304F03BB0017D14F"
-               BuildableName = "Compositor.app"
+               BuildableName = "Compositor CN.app"
                BlueprintName = "Compositor"
                ReferencedContainer = "container:Compositor.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F311F98304F03BB0017D14F"
-            BuildableName = "Compositor.app"
+            BuildableName = "Compositor CN.app"
             BlueprintName = "Compositor"
             ReferencedContainer = "container:Compositor.xcodeproj">
          </BuildableReference>
@@ -81,7 +81,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F311F98304F03BB0017D14F"
-            BuildableName = "Compositor.app"
+            BuildableName = "Compositor CN.app"
             BlueprintName = "Compositor"
             ReferencedContainer = "container:Compositor.xcodeproj">
          </BuildableReference>
@@ -98,7 +98,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8F311F98304F03BB0017D14F"
-            BuildableName = "Compositor.app"
+            BuildableName = "Compositor CN.app"
             BlueprintName = "Compositor"
             ReferencedContainer = "container:Compositor.xcodeproj">
          </BuildableReference>

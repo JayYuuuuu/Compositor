@@ -42,7 +42,7 @@ def main():
     for key, entry in catalog["strings"].items():
         for language in ("en", "zh-Hans"):
             unit = entry["localizations"][language]["stringUnit"]
-            assert unit["state"] == "translated" and unit["value"], (key, language)
+            assert unit["state"] == "translated" and (unit["value"] or entry.get("shouldTranslate") is False), (key, language)
             assert placeholders(key) == placeholders(unit["value"]), (key, language)
     print(f"Validated {len(catalog['strings'])} English / Simplified Chinese catalog entries and placeholders.")
 

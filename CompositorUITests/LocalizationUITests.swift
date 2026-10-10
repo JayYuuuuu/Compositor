@@ -10,7 +10,8 @@ final class LocalizationUITests: XCTestCase {
             let app = XCUIApplication()
             app.launchArguments = ["-AppleLanguages", chinese ? "(zh-Hans)" : "(en)",
                                    "-AppleLocale", chinese ? "zh_CN" : "en_US",
-                                   "-SUEnableAutomaticChecks", "NO", "-SUHasLaunchedBefore", "YES"]
+                                   "-SUEnableAutomaticChecks", "NO", "-SUHasLaunchedBefore", "YES",
+                                   "-ApplePersistenceIgnoreState", "YES"]
             app.launch()
             defer { app.terminate() }
             func label(_ english: String, _ translated: String) -> String { chinese ? translated : english }
@@ -53,6 +54,75 @@ final class LocalizationUITests: XCTestCase {
             screenshot.lifetime = .keepAlways
             add(screenshot)
             app.buttons[label("Cancel", "取消")].click()
+
+            let folder = FileManager.default.temporaryDirectory.appendingPathComponent("CompositorLocalization-" + UUID().uuidString)
+            try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: false)
+            defer { try? FileManager.default.removeItem(at: folder) }
+            let input = folder.appendingPathComponent("localized-input.png")
+            let bitmap = try XCTUnwrap(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 16, pixelsHigh: 16,
+                bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
+                colorSpaceName: .deviceRGB, bytesPerRow: 64, bitsPerPixel: 32))
+            for y in 0..<16 { for x in 0..<16 { bitmap.setColor(NSColor(red: 1, green: 0, blue: 0, alpha: 1), atX: x, y: y) } }
+            try XCTUnwrap(bitmap.representation(using: .png, properties: [:])).write(to: input)
+            file.click()
+            app.menuItems[label("Import Images…", "导入图像…")].click()
+            choosePath(input.path, in: app)
+            clickPanelButton(["Open", "Import", "打开", "导入"], in: app)
+            let count = app.staticTexts["layerCount"]
+            let imported = NSPredicate(format: "value == %@", "2")
+            expectation(for: imported, evaluatedWith: count)
+            waitForExpectations(timeout: 10)
+
+            file.click()
+            app.menuItems[label("Export PNG…", "导出 PNG…")].click()
+            save(to: folder, name: "localized-output.png", in: app)
+            let output = folder.appendingPathComponent("localized-output.png")
+            XCTAssertTrue(FileManager.default.fileExists(atPath: output.path))
+            let exported = try XCTUnwrap(NSBitmapImageRep(data: try Data(contentsOf: output)))
+            XCTAssertEqual(exported.pixelsWide, 64)
+            XCTAssertEqual(exported.pixelsHigh, 32)
+            let center = try XCTUnwrap(exported.colorAt(x: 32, y: 16)?.usingColorSpace(.sRGB))
+            XCTAssertGreaterThan(center.redComponent, 0.9)
+            XCTAssertGreaterThan(center.alphaComponent, 0.9)
+
+            app.typeKey("s", modifierFlags: .command)
+            save(to: folder, name: "localized-project.comp", in: app)
+            let project = folder.appendingPathComponent("localized-project.comp")
+            XCTAssertTrue(FileManager.default.fileExists(atPath: project.appendingPathComponent("manifest.json").path))
+            file.click()
+            app.menuItems[label("Close Project", "关闭项目")].click()
+            file.click()
+            app.menuItems[label("Open Project…", "打开项目…")].click()
+            choosePath(project.path, in: app)
+            clickPanelButton(["Open", "打开"], in: app)
+            expectation(for: imported, evaluatedWith: app.staticTexts["layerCount"])
+            waitForExpectations(timeout: 10)
+            XCTAssertEqual(app.staticTexts["canvasDimensions"].value as? String, "64 × 32 px")
         }
+    }
+
+    @MainActor
+    private func choosePath(_ path: String, in app: XCUIApplication) {
+        app.typeKey("g", modifierFlags: [.command, .shift])
+        app.typeText(path)
+        app.typeKey(.return, modifierFlags: [])
+    }
+
+    @MainActor
+    private func clickPanelButton(_ labels: [String], in app: XCUIApplication) {
+        let button = app.buttons.matching(NSPredicate(format: "label IN %@", labels)).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 5))
+        button.click()
+    }
+
+    @MainActor
+    private func save(to folder: URL, name: String, in app: XCUIApplication) {
+        choosePath(folder.path, in: app)
+        let field = app.textFields["saveAsNameTextField"]
+        XCTAssertTrue(field.waitForExistence(timeout: 5))
+        field.click()
+        field.typeKey("a", modifierFlags: .command)
+        field.typeText(name)
+        clickPanelButton(["Save", "存储", "保存"], in: app)
     }
 }

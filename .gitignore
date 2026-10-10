@@ -27,3 +27,6 @@ BUILD_PLAN.md
 .env.local
 localization-reports/
 __pycache__/
+
+# Local private maintenance handoff
+CLAUDE.local.md

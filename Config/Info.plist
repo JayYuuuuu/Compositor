@@ -30,7 +30,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.compositor.project</string>
@@ -42,9 +42,9 @@
 	<key>SUEnableInstallerLauncherService</key>
 	<true/>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/robbietilton/Compositor/main/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/JayYuuuuu/Compositor/main/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>KZvD724t8QpzTR4OGrHrsCWt538TJ/g/qrTZii+o214=</string>
+	<string>N520AFu6PIqh/QjLHcKv/g4ngoIlEEg2jFXioeFhLh0=</string>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>UTExportedTypeDeclarations</key>
@@ -114,5 +114,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>CFBundleDisplayName</key>
+	<string>Compositor CN</string>
+	<key>SUVerifyUpdateBeforeExtraction</key>
+	<true/>
 </dict>
 </plist>

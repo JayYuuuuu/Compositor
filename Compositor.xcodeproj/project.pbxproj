@@ -28,7 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8F311F99304F03BB0017D14F /* Compositor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Compositor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F311F99304F03BB0017D14F /* Compositor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Compositor CN.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F311FA6304F03BC0017D14F /* CompositorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompositorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F311FB0304F03BC0017D14F /* CompositorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CompositorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -316,7 +316,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -383,7 +383,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -414,7 +414,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
@@ -426,14 +426,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Community Simplified Chinese fork. Original work under the MIT license.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn;
+				PRODUCT_NAME = "Compositor CN";
+				PRODUCT_MODULE_NAME = Compositor;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -453,9 +454,9 @@
 				CODE_SIGN_ENTITLEMENTS = Config/Compositor.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -465,14 +466,15 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Config/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.graphics-design";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Community Simplified Chinese fork. Original work under the MIT license.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn;
+				PRODUCT_NAME = "Compositor CN";
+				PRODUCT_MODULE_NAME = Compositor;
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -489,20 +491,20 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compositor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Compositor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compositor CN.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Compositor CN";
 			};
 			name = Debug;
 		};
@@ -511,20 +513,20 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor.tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compositor.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Compositor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Compositor CN.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Compositor CN";
 			};
 			name = Release;
 		};
@@ -532,12 +534,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -552,12 +554,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 10001;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 3E4X3B9Z9T;
+				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.4.9;
-				PRODUCT_BUNDLE_IDENTIFIER = com.wonderassembly.compositor.uitests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jayyuuuuu.compositor.cn.uitests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;

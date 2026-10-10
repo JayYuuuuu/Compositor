@@ -1,10 +1,18 @@
-# Compositor
+# Compositor CN
+
+社区简体中文分支，基于 [上游 Compositor](https://github.com/robbietilton/Compositor)，保留英文。独立应用，可与原版共存，更新仅来自本 fork。
+
+**社区测试版：ad-hoc 签名，未获 Apple Developer ID 签名或公证，macOS 安装时可能出现安全提示。** 需要 Apple silicon 和 macOS 26 或更新版本；部分高级工具仍可能显示英文。
+
+安装包与校验值见 [社区 Releases](https://github.com/JayYuuuuu/Compositor/releases)。将 Compositor CN.app 拖入 Applications；只在确认下载自本项目后，通过系统设置的“隐私与安全性”允许该应用，不要关闭全局安全检查。
+
+This is an independent community Simplified Chinese fork, not an official upstream build. Community test builds are ad-hoc signed and are not Developer ID-signed or notarized.
 
 ## 简体中文维护分支
 
 这是 [JayYuuuuu/Compositor](https://github.com/JayYuuuuu/Compositor) 的社区汉化分支，基于 [robbietilton/Compositor](https://github.com/robbietilton/Compositor)，继续采用 MIT 许可并保留原作者声明。
 
-**当前状态：项目已建立，汉化尚未实现，暂未提供中文版安装包。** 下文下载链接和 Homebrew 命令指向上游英文版。
+**当前状态：已实现首批简体中文支持，首个独立社区测试版正在验收。** Homebrew 命令安装的是上游原版；社区安装包使用上面的 Releases 入口。
 
 目标是保留英文并增加简体中文界面，持续跟进上游更新。汉化范围、实现约束、版本记录和验收要求见 [汉化维护文档](docs/localization-maintenance.md)。本分支独立维护；上游目前不接受翻译 PR，不向上游提交汉化 PR。
 
@@ -19,11 +27,12 @@ Because it’s open source, you can download the Xcode project and add, remove, 
 ## Installation
 
 ### Download
-Get Compositor from [robbietilton.com/compositor](https://robbietilton.com/compositor), or download the latest release directly from [GitHub Releases](https://github.com/robbietilton/Compositor/releases/latest).
+Download Compositor CN from the [community releases](https://github.com/JayYuuuuu/Compositor/releases). The original upstream application remains available from [robbietilton.com/compositor](https://robbietilton.com/compositor).
 
 ### Homebrew
 
 ```sh
+# This cask installs the upstream app, not Compositor CN:
 brew install --cask robbietilton-compositor
 ```
 
@@ -86,7 +95,7 @@ brew install --cask robbietilton-compositor
 - Keep working while a project saves
 - Photoshop-style keyboard shortcuts throughout, remappable in Edit > Keyboard Shortcuts
 - Drag a number's label to scrub its value, as in Photoshop
-- Automatic updates, signed and notarized
+- Independent community update feed with Ed25519 signatures; community test builds are not notarized
 
 ### Works with AI agents
 - AI agents and scripts can build and edit projects directly: a `.comp` is a folder of PNG layers and a manifest, and an open project updates live as it's written. See [Writing Compositor projects](docs/writing-comp-files.md)
@@ -106,13 +115,7 @@ Open `Compositor.xcodeproj` and run the **Compositor** scheme.
 
 ## Releasing
 
-`scripts/release.sh` builds a Release version, signs it with Developer ID, notarizes and staples it, and packages it into `dist/Compositor-<version>.dmg`.
-
-It needs, all kept outside this repository:
-
-- a **Developer ID Application** certificate in the login keychain
-- notarization credentials saved with `xcrun notarytool store-credentials "compositor-notary" …`
-- [`create-dmg`](https://github.com/create-dmg/create-dmg) (`brew install create-dmg`)
+Community releases are built, verified, and published by a private maintenance service. The inherited public release/publish scripts are disabled so they cannot publish to upstream. The community update feed and application identity are independent of upstream.
 
 ## License
 
