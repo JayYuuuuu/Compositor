@@ -22,3 +22,8 @@ xcuserdata/
 # Claude Code settings personal to this machine
 .claude/settings.local.json
 BUILD_PLAN.md
+
+# Private translation configuration and local candidate reports
+.env.local
+localization-reports/
+__pycache__/

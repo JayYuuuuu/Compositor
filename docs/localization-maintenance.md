@@ -148,3 +148,48 @@ xcodebuild -project Compositor.xcodeproj -scheme Compositor \
 中文回归改为 `-testLanguage zh-Hans -testRegion CN`，只选上述本地化、图层外观、项目、导出、JPEG 导出、图像导入六组测试（其余旧测试有英文显示文字假设）。UI 测试用 `CompositorLocalization` scheme，指定 `-only-testing:CompositorUITests/LocalizationUITests`，目前等待桌面认证障碍解除后验收；这不会在常规 unit-test scheme 中自动运行。命令微基准用 `python3 scripts/benchmark-command-palette.py --baseline 9a319ff`，必须在 macOS 执行。
 
 本次实际 fetch 后，上游仍为 `b4bfdea87f9dc0cbc9eabfa63683eb1b9c2bca60`，没有需要合并的新提交。维护期间工作区初始干净，没有覆盖他人修改。
+
+## DeepSeek 增量翻译试接入（2026-10-10）
+
+用户授权使用现有项目的 DeepSeek 凭据做低费用翻译试验，并接入图像编辑专业术语规则。工具为 `scripts/translate-localization.py`，固定术语和上下文为 `docs/localization-glossary.json`，实测样本及用量为 `docs/localization-deepseek-evaluation.json`。密钥只在运行时从 `DEEPSEEK_API_KEY` 或明确指定的私有环境文件读取，只提取这一项，不复制进仓库、提示词、候选报告或应用包。
+
+术语方向：同类功能优先沿用 Photoshop 简体中文的常用叫法，便于 Photoshop 用户迁移。维护者核定术语，模型不能自己改词表；当前锁定 72 个术语/短语。依据已查到的 [Adobe 官方混合模式说明](https://helpx.adobe.com/cn/photoshop/desktop/repair-retouch/adjust-light-tone/blending-mode-descriptions.html)、[剪贴蒙版说明](https://helpx.adobe.com/cn/photoshop/using/revealing-layers-clipping-masks.html)、[图层蒙版说明](https://helpx.adobe.com/cn/photoshop/using/editing-layer-masks.html)和 [USM 锐化教程](https://www.adobe.com/cn/learn/photoshop/web/sharpen-a-photo)，统一“正片叠底、滤色、剪贴蒙版、图层蒙版、USM 锐化”等术语。本分支没有获知 Adobe 内部具体翻译生产流程，不把“我们采用术语表和复核”描述成 Adobe 内部做法。
+
+专业译者人设只负责设定任务方向；固定词表、控件上下文、规则检查和复核才是质量控制。`Screen` 作为混合模式是“滤色”，在显示器句子里应为“屏幕”；画布尺寸摘要中的 `New` 是“新尺寸”，不是“新建”。因此词表采用完整短语、最长匹配和歧义范围限制，并允许给单条文字补充真实界面上下文。没有已核定叫法的新专业词需要复核，不能让模型自由创造。
+
+默认只选目录中缺失/未完成的简体中文文字，跳过已有译文、明确不翻译项、废弃项和纯数字符号；没有待译内容就不读取凭据、不发请求。语义型目录键保留原标识，仅翻译英文显示值。多复数或设备变体结构不擅自压成普通字符串，遇到时停止并要求另行复核。新增 SwiftUI 字面量仍需通过 Xcode 提取/导出本地化文字加入目录；动态显示键需人工登记。本工具不负责自行推断所有源码字符串，更不会翻译内部标识或项目数据。
+
+模型为真实接口回读确认可用的 `deepseek-flash`，显式关闭思考模式，使用 JSON 输出。模式及输出要求依据 [DeepSeek 官方首次调用说明](https://api-docs.deepseek.com/)、[JSON 输出说明](https://api-docs.deepseek.com/zh-cn/guides/json_mode/)和[思考模式说明](https://api-docs.deepseek.com/guides/thinking_mode/)。默认最多一批 40 条、一笔请求、4,096 个输出 token；单次运行硬限制最多 200 条、5 笔请求、每笔 8,192 个输出 token、请求体不超过 60 KB。截断、空回答、连接失败或格式错误不自动重试，避免隐性重复花费。
+
+生成独立的待审核候选报告，不自动写入应用目录。报告保留目录与词表摘要、模型、时间、API token 用量、剩余队列及逐项拒绝原因；以排他锁和完整文件原子发布，已有报告不会被覆盖。检查占位符类型/位置/次数/精度、百分号转义、数字、快捷键符号和字母、按键名称、品牌/格式/单位、省略号、命令路径和换行；已锁定的专业术语不符合就拒绝。检查通过仍标为待审核，不等于语义或排版验收通过。审核后才在更新分支中把候选译文合入目录，再跑已有目录验证和 Mac 验证。
+
+### 运行方式
+
+先检查待译队列，不需要凭据也不会花钱：
+
+```sh
+python3 scripts/translate-localization.py --dry-run
+```
+
+在私有运行环境注入 `DEEPSEEK_API_KEY` 后生成候选报告：
+
+```sh
+mkdir -p localization-reports
+python3 scripts/translate-localization.py --output localization-reports/candidate-001.json
+```
+
+也可使用 `--env-file` 指向已有私有配置，不把路径固定进仓库。`--catalog` 可指定独立分支/临时目录中的新版本字符串目录。每个报告用新名称；审核并合入译文后再处理剩余队列。重复运行但未更新目录，会再次选择同一批待译项；工具不会声称报告生成等于译文已应用。
+
+本轮仅接入增量翻译工具，没有启用定时跟进、自动合并、发布安装包，也没有把凭据配置到 GitHub。后续自动跟进程序可调用此入口；若要在 GitHub 上调用，还需按私有配置操作规则单独设置凭据。
+
+### 小样本实测
+
+首轮 40 条真实界面样本耗时 2.601 秒，API 返回输入 2,495、输出 742 token。18 个常用专业名称符合词表，但尺寸摘要的 `New` 被译成“新建”，按键缩写 `Cmd` 被扩写；检查器还误把显示器句子里的 screen 当成混合模式。这说明只给人设/词表不足以保证正确，需要上下文和有效判据。
+
+补充上下文和检查后，同一批 40 条耗时 2.566 秒，输入 2,848、输出 746 token，全部通过规则检查；本会话逐项阅读未发现明显语义或术语错误。另用临时目录副本加入 7 条实际未翻译的快捷键设置文字，实测只选这 7 条而不覆盖原有 590 条，耗时 0.948 秒，输入 1,597、输出 110 token，7 条均通过。公开评测记录保留样本；这不是随机质量基准，也未验证候选文字的实际界面布局。
+
+上述三次调用共输入 6,940 token（其中缓存命中 1,536）、输出 1,598 token。按 [2026-10-10 官方美元价格](https://api-docs.deepseek.com/quick_start/pricing/)计算，非高峰约 $0.001774，高峰上界约 $0.003548；这只是 API 返回用量乘当日公开价格，不是账户账单实付值。价格会变化，后续需重查；未来新增条数和长句长度也会影响花费。没有重新翻译整份目录。
+
+本轮应用源码与现有翻译目录未修改，不重跑 macOS 全量构建。Python 工具的 9 项针对性测试通过，覆盖专业术语、歧义上下文、占位符/快捷键保护、已有译文跳过、标识保留、复杂结构拒绝、失败响应拒绝、零队列零调用、限量生成和报告防覆盖；现有 590 条双语资源验证仍通过。
+
+补入 Adobe 术语来源及最终保护规则后，用相同 7 条缺项再次调用真实接口验证：7 条全部通过，耗时 1.225 秒。四次试验合计按当日官方高峰价估算约 $0.004077，非高峰约 $0.002039；仍非账户账单，详见公开评测记录。没有覆盖或应用候选译文。
