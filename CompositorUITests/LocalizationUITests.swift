@@ -59,10 +59,12 @@ final class LocalizationUITests: XCTestCase {
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: false)
             defer { try? FileManager.default.removeItem(at: folder) }
             let input = folder.appendingPathComponent("localized-input.png")
-            let bitmap = try XCTUnwrap(NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: 16, pixelsHigh: 16,
-                bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false,
-                colorSpaceName: .deviceRGB, bytesPerRow: 64, bitsPerPixel: 32))
-            for y in 0..<16 { for x in 0..<16 { bitmap.setColor(NSColor(red: 1, green: 0, blue: 0, alpha: 1), atX: x, y: y) } }
+            let space = try XCTUnwrap(CGColorSpace(name: CGColorSpace.sRGB))
+            let context = try XCTUnwrap(CGContext(data: nil, width: 16, height: 16, bitsPerComponent: 8,
+                bytesPerRow: 64, space: space, bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue))
+            context.setFillColor(CGColor(srgbRed: 1, green: 0, blue: 0, alpha: 1))
+            context.fill(CGRect(x: 0, y: 0, width: 16, height: 16))
+            let bitmap = NSBitmapImageRep(cgImage: try XCTUnwrap(context.makeImage()))
             try XCTUnwrap(bitmap.representation(using: .png, properties: [:])).write(to: input)
             let fixture = try XCTUnwrap(NSBitmapImageRep(data: try Data(contentsOf: input)))
             let fixturePixel = try XCTUnwrap(fixture.colorAt(x: 8, y: 8)?.usingColorSpace(.sRGB))
