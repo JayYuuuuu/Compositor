@@ -1,6 +1,12 @@
 name: Verify
 
 on:
+  workflow_dispatch:
+    inputs:
+      run_ui:
+        description: Run the bilingual localization UI workflow
+        type: boolean
+        default: true
   push:
   pull_request:
 
@@ -15,7 +21,7 @@ jobs:
   unit:
     name: unit
     # Push covers same-repo branches. pull_request runs only for forks, so a PR is not tested twice.
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
     runs-on: macos-26
     timeout-minutes: 60
     steps:
@@ -47,6 +53,7 @@ jobs:
       - name: Run unit tests in parallel
         run: >
           xcodebuild test-without-building
+          -testLanguage en -testRegion US
           -project Compositor.xcodeproj
           -scheme Compositor
           -destination 'platform=macOS,arch=arm64'
@@ -60,6 +67,7 @@ jobs:
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
         run: >
           xcodebuild test-without-building
+          -testLanguage en -testRegion US
           -project Compositor.xcodeproj
           -scheme Compositor
           -destination 'platform=macOS,arch=arm64'
@@ -75,5 +83,39 @@ jobs:
         with:
           name: unit-test-results
           path: '*.xcresult'
+          retention-days: 7
+          if-no-files-found: ignore
+
+  localization-ui:
+    name: localization-ui
+    if: github.event_name == 'workflow_dispatch' && inputs.run_ui
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Select Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+
+      - name: Test bilingual localization workflow
+        run: >
+          xcodebuild test
+          -project Compositor.xcodeproj
+          -scheme CompositorLocalization
+          -destination 'platform=macOS,arch=arm64'
+          -configuration Debug
+          -derivedDataPath DerivedData
+          -resultBundlePath LocalizationUIResults.xcresult
+          -parallel-testing-enabled NO
+          -only-testing:CompositorUITests/LocalizationUITests
+          CODE_SIGN_IDENTITY=-
+
+      - name: Upload localization UI results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: localization-ui-results
+          path: LocalizationUIResults.xcresult
           retention-days: 7
           if-no-files-found: ignore
