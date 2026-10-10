@@ -13952,7 +13952,6 @@
     },
     "Camera Raw Light": {
       "comment": "Tonal adjustment panel, not a light color swatch.",
-      "extractionState": "extracted_with_value",
       "localizations": {
         "en": {
           "stringUnit": {
