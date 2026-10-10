@@ -1,2 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"><channel><title>Compositor CN Community Test Updates</title></channel></rss>
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0"><channel><title>Compositor CN Community Test Updates</title><item><title>Compositor CN 1.4.9 CN1</title><sparkle:version>10001</sparkle:version><sparkle:shortVersionString>1.4.9 CN1</sparkle:shortVersionString><sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion><link>https://github.com/JayYuuuuu/Compositor/releases/tag/v1.4.9-cn.1</link><enclosure url="https://github.com/JayYuuuuu/Compositor/releases/download/v1.4.9-cn.1/Compositor-CN.dmg" sparkle:edSignature="ZFVIBQj94oWF7UbJTlMMAPA/fDQKv1G/K6tzLYPw2wJml2Kk2DRMKQSVe2VQ+IdpQucQCBHE2wrsEpa3D6MBBw==" length="9995987" type="application/octet-stream" /></item></channel></rss>
+<!-- sparkle-signatures:
+edSignature: 22oKTq51cWd1PvjH/kJb7kK+U+Xf8lmcR5YWXkZqPgQ+GXC2CqvHZdgUlDdb4XQtOuYgcj34eHX1v1nngrKyDg==
+length: 769
+-->
