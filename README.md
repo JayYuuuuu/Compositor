@@ -1,5 +1,15 @@
 # Compositor
 
+## 简体中文维护分支
+
+这是 [JayYuuuuu/Compositor](https://github.com/JayYuuuuu/Compositor) 的社区汉化分支，基于 [robbietilton/Compositor](https://github.com/robbietilton/Compositor)，继续采用 MIT 许可并保留原作者声明。
+
+**当前状态：项目已建立，汉化尚未实现，暂未提供中文版安装包。** 下文下载链接和 Homebrew 命令指向上游英文版。
+
+目标是保留英文并增加简体中文界面，持续跟进上游更新。汉化范围、实现约束、版本记录和验收要求见 [汉化维护文档](docs/localization-maintenance.md)。本分支独立维护；上游目前不接受翻译 PR，不向上游提交汉化 PR。
+
+---
+
 Adobe Photoshop costs too much and tools like GIMP don’t feel familiar enough for me to stay in flow. That’s why I built Compositor.
 
 The goal was to create a full-featured image editor that is completely free and open source. I used to use Photoshop for compositing and post-processing, so Compositor is built around that workflow - with the tools needed to create a pixel-perfect final image.
