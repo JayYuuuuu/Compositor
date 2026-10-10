@@ -19823,6 +19823,23 @@
           }
         }
       }
+    },
+    "(Multiple)": {
+      "comment": "Font picker selection spans multiple fonts; display placeholder only, identifier is separate.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "(Multiple)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "（多种字体）"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
