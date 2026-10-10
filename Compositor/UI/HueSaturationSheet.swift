@@ -88,7 +88,7 @@ struct HueSaturationSheet: View {
                     .background(session.hueSampleMode == mode ? Color.accentColor.opacity(0.25) : .clear,
                                 in: RoundedRectangle(cornerRadius: 4))
                     .help(mode.help)
-                    .accessibilityLabel("\(mode.rawValue) color")
+                    .accessibilityLabel("\(L10n.text(mode.rawValue)) color")
                 }
                 Divider().frame(height: 16)
             }
@@ -130,7 +130,7 @@ struct HueSaturationSheet: View {
                 .scrubbable(sensitivity: 1, value: value, range: range)
             CameraRawSlider(value: value.wrappedValue, range: range, track: track, help: "\(title). Double-click to reset.",
                             onChange: { value.wrappedValue = $0.rounded() }, onReset: { value.wrappedValue = reset })
-            TextField(title, value: value, format: .number.precision(.fractionLength(0)))
+            TextField(L10n.text(title), value: value, format: .number.precision(.fractionLength(0)))
                 .frame(width: 48).textFieldStyle(.roundedBorder).multilineTextAlignment(.trailing)
                 .unitSuffix(unit)
                 // A field's own submit swallows Return, so it confirms the window itself, as OK does.

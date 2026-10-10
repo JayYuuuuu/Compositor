@@ -58,7 +58,7 @@ struct GridSettingsSheet: View {
                 Picker("Color", selection: $appearance.preset) {
                     ForEach(GridAppearance.Preset.allCases) { Text(L10n.text($0.rawValue)).tag($0) }
                 }.labelsHidden()
-                DialogColorSwatch(title: "Grid Color", color: swatchColor, session: session)
+                DialogColorSwatch(title: String(localized: "Grid Color"), color: swatchColor, session: session)
                     .help("Choose a custom grid color")
             }
             HStack {
@@ -89,8 +89,8 @@ struct GridSettingsSheet: View {
                     .scrubbable(sensitivity: 0.2, value: $subdivisions, range: LayoutGrid.subdivisionRange)
                 TextField("Subdivisions", value: $subdivisions, format: .number)
             }
-            Text(valid ? "A subdivision every \(Double(grid.step).formatted(.number.precision(.fractionLength(0...2)))) pixels."
-                       : "Use gridlines every \(LayoutGrid.spacingRange.lowerBound)–\(LayoutGrid.spacingRange.upperBound.formatted()) pixels and \(LayoutGrid.subdivisionRange.lowerBound)–\(LayoutGrid.subdivisionRange.upperBound) subdivisions, no more than the pixels between gridlines.")
+            Text(valid ? String(localized: "A subdivision every \(Double(grid.step).formatted(.number.precision(.fractionLength(0...2)))) pixels.")
+                       : String(localized: "Use gridlines every \(LayoutGrid.spacingRange.lowerBound)–\(LayoutGrid.spacingRange.upperBound.formatted()) pixels and \(LayoutGrid.subdivisionRange.lowerBound)–\(LayoutGrid.subdivisionRange.upperBound) subdivisions, no more than the pixels between gridlines."))
                 .foregroundStyle(valid ? Color.secondary : Color.orange).font(.callout)
                 .fixedSize(horizontal: false, vertical: true)
             HStack {

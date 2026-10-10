@@ -115,6 +115,36 @@ final class LocalizationUITests: XCTestCase {
             expectation(for: imported, evaluatedWith: app.staticTexts["layerCount"])
             waitForExpectations(timeout: 10)
             XCTAssertEqual(app.staticTexts["canvasDimensions"].value as? String, "64 × 32 px")
+
+            app.menuBars.menuBarItems[label("Filter", "滤镜")].click()
+            app.menuItems[label("Camera Raw Filter…", "Camera Raw 滤镜…")].click()
+            let rawSections = [("Light", "光线"), ("Color", "颜色"), ("Color Grading", "颜色分级"),
+                ("Effects", "效果"), ("Curve", "曲线"), ("Color Mixer", "混色器"), ("Detail", "细节"),
+                ("Optics", "光学"), ("Geometry", "几何"), ("Calibration", "校准")]
+            for (english, translated) in rawSections {
+                let section = app.buttons["rawSection-" + english]
+                XCTAssertTrue(section.waitForExistence(timeout: 5))
+                XCTAssertEqual(section.label, label(english, translated))
+            }
+            // Close initially open sections so the advanced controls remain within the viewport.
+            for name in ["Light", "Color", "Color Grading"] { app.buttons["rawSection-" + name].click() }
+            app.buttons["rawSection-Curve"].click()
+            let point = app.radioButtons[label("Point", "点曲线")]
+            XCTAssertTrue(point.waitForExistence(timeout: 5))
+            point.click()
+            XCTAssertTrue(app.radioButtons[label("Red", "红色")].waitForExistence(timeout: 5))
+            let rawScreenshot = XCTAttachment(screenshot: app.screenshot())
+            rawScreenshot.name = chinese ? "Chinese RAW point curve" : "English RAW point curve"
+            rawScreenshot.lifetime = .keepAlways; add(rawScreenshot)
+            app.buttons[label("Cancel", "取消")].click()
+
+            app.menuBars.menuBarItems[label("Edit", "编辑")].click()
+            app.menuItems[label("Keyboard Shortcuts…", "键盘快捷键…")].click()
+            let shortcutSearch = app.textFields[label("Search shortcuts", "搜索快捷键")]
+            XCTAssertTrue(shortcutSearch.waitForExistence(timeout: 5))
+            shortcutSearch.typeText(label("Decrease brush size", "减小画笔大小"))
+            XCTAssertTrue(app.staticTexts[label("Decrease brush size", "减小画笔大小")].waitForExistence(timeout: 5))
+            app.buttons[label("Cancel", "取消")].click()
         }
     }
 

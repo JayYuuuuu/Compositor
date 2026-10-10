@@ -22,25 +22,25 @@ struct FilterSheet: View {
             case .curves:
                 CurvesControls(settings: Binding(get: { settings.curves }, set: { new in update { $0.curves = new } }))
             case .exposure:
-                control("Exposure", \.exposure.exposure, range: ExposureSettings.exposureRange, unit: "", decimals: 2, logarithmic: false)
-                control("Offset", \.exposure.offset, range: ExposureSettings.offsetRange, unit: "", decimals: 4, logarithmic: false)
-                control("Gamma", \.exposure.gamma, range: ExposureSettings.gammaRange, unit: "", decimals: 2, logarithmic: true)
+                control(String(localized: "Exposure"), \.exposure.exposure, range: ExposureSettings.exposureRange, unit: "", decimals: 2, logarithmic: false)
+                control(String(localized: "Offset"), \.exposure.offset, range: ExposureSettings.offsetRange, unit: "", decimals: 4, logarithmic: false)
+                control(String(localized: "Gamma"), \.exposure.gamma, range: ExposureSettings.gammaRange, unit: "", decimals: 2, logarithmic: true)
             case .gradientMap:
                 GradientMapControls(settings: Binding(get: { settings.gradientMap }, set: { new in update { $0.gradientMap = new } }),
                                     pick: { session.openGradientMapColorPicker(highlights: $0) })
             case .blackWhite:
                 // Each slider says how bright that family of colors becomes, as Photoshop's do.
-                control("Reds", \.blackWhite.reds, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(0))
-                control("Yellows", \.blackWhite.yellows, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(60))
-                control("Greens", \.blackWhite.greens, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(120))
-                control("Cyans", \.blackWhite.cyans, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(180))
-                control("Blues", \.blackWhite.blues, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(240))
-                control("Magentas", \.blackWhite.magentas, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(300))
+                control(String(localized: "Reds"), \.blackWhite.reds, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(0))
+                control(String(localized: "Yellows"), \.blackWhite.yellows, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(60))
+                control(String(localized: "Greens"), \.blackWhite.greens, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(120))
+                control(String(localized: "Cyans"), \.blackWhite.cyans, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(180))
+                control(String(localized: "Blues"), \.blackWhite.blues, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(240))
+                control(String(localized: "Magentas"), \.blackWhite.magentas, range: BlackWhiteSettings.range, unit: "%", decimals: 0, logarithmic: false, track: .luminance(300))
                 Toggle("Tint", isOn: flag(\.blackWhite.tint))
                     .help("Color the result while keeping its tones, for a sepia or a cyanotype")
                 if settings.blackWhite.tint {
-                    control("Hue", \.blackWhite.tintHue, range: 0...360, unit: "°", decimals: 0, logarithmic: false, track: .plain)
-                    control("Saturation", \.blackWhite.tintSaturation, range: 0...100, unit: "%", decimals: 0, logarithmic: false,
+                    control(String(localized: "Hue"), \.blackWhite.tintHue, range: 0...360, unit: "°", decimals: 0, logarithmic: false, track: .plain)
+                    control(String(localized: "Saturation"), \.blackWhite.tintSaturation, range: 0...100, unit: "%", decimals: 0, logarithmic: false,
                             track: .saturation(settings.blackWhite.tintHue))
                 }
             case .cameraRaw:
@@ -48,23 +48,23 @@ struct FilterSheet: View {
                     .frame(maxHeight: .infinity, alignment: .top)
             case .colorBalance:
                 Text("Shadows").font(.headline)
-                control("Cyan / Red", \.colorBalance.shadowCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
-                control("Magenta / Green", \.colorBalance.shadowMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
-                control("Yellow / Blue", \.colorBalance.shadowYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
+                control(String(localized: "Cyan / Red"), \.colorBalance.shadowCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
+                control(String(localized: "Magenta / Green"), \.colorBalance.shadowMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
+                control(String(localized: "Yellow / Blue"), \.colorBalance.shadowYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
                 Text("Midtones").font(.headline)
-                control("Cyan / Red", \.colorBalance.midCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
-                control("Magenta / Green", \.colorBalance.midMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
-                control("Yellow / Blue", \.colorBalance.midYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
+                control(String(localized: "Cyan / Red"), \.colorBalance.midCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
+                control(String(localized: "Magenta / Green"), \.colorBalance.midMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
+                control(String(localized: "Yellow / Blue"), \.colorBalance.midYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
                 Text("Highlights").font(.headline)
-                control("Cyan / Red", \.colorBalance.highlightCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
-                control("Magenta / Green", \.colorBalance.highlightMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
-                control("Yellow / Blue", \.colorBalance.highlightYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
+                control(String(localized: "Cyan / Red"), \.colorBalance.highlightCyanRed, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.cyanRedTrack)
+                control(String(localized: "Magenta / Green"), \.colorBalance.highlightMagentaGreen, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.magentaGreenTrack)
+                control(String(localized: "Yellow / Blue"), \.colorBalance.highlightYellowBlue, range: ColorBalanceSettings.range, unit: "", decimals: 0, logarithmic: false, track: Self.yellowBlueTrack)
                 Toggle("Preserve Luminosity", isOn: flag(\.colorBalance.preserveLuminosity))
                     .help("Put each pixel's brightness back afterwards, so only the color moves")
             case .grain:
-                control("Amount", \.grain.amount, range: GrainSettings.amountRange, unit: "", decimals: 0, logarithmic: false)
-                control("Size", \.grain.size, range: GrainSettings.sizeRange, unit: "px", decimals: 1, logarithmic: true)
-                control("Roughness", \.grain.roughness, range: GrainSettings.roughnessRange, unit: "", decimals: 0, logarithmic: false)
+                control(String(localized: "Amount"), \.grain.amount, range: GrainSettings.amountRange, unit: "", decimals: 0, logarithmic: false)
+                control(String(localized: "Size"), \.grain.size, range: GrainSettings.sizeRange, unit: String(localized: "px"), decimals: 1, logarithmic: true)
+                control(String(localized: "Roughness"), \.grain.roughness, range: GrainSettings.roughnessRange, unit: "", decimals: 0, logarithmic: false)
             case .removeBackground:
                 Text("Hide the background behind a layer mask, keeping the foreground subjects. The pixels stay, so the background can be painted back at any time.")
                     .fixedSize(horizontal: false, vertical: true)
@@ -75,23 +75,23 @@ struct FilterSheet: View {
                 .pickerStyle(.segmented).labelsHidden()
                 .help("Basic is quick; Advanced refines the mask against the layer's own detail, for hair and fur")
                 if settings.backgroundQuality == .advanced {
-                    control("Refine", \.refineEdges, range: 0...40, unit: "px", decimals: 0, logarithmic: false)
+                    control(String(localized: "Refine"), \.refineEdges, range: 0...40, unit: String(localized: "px"), decimals: 0, logarithmic: false)
                         .help("Pull the mask onto the image's own edges, which recovers hair and fur")
-                    control("Contrast", \.matteContrast, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                    control(String(localized: "Contrast"), \.matteContrast, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
                         .help("Clear the haze that leaves background showing through thin areas")
-                    control("Shift Edge", \.shiftEdge, range: -10...10, unit: "px", decimals: 0, logarithmic: false)
+                    control(String(localized: "Shift Edge"), \.shiftEdge, range: -10...10, unit: String(localized: "px"), decimals: 0, logarithmic: false)
                         .help("Shrink the mask to drop the rim of background color around the subject, or grow it")
                 }
             case .contentAwareFill:
                 Text("Fill the selection using surrounding pixels from this layer.")
                     .fixedSize(horizontal: false, vertical: true)
             case .gaussianBlur:
-                control("Radius", \.radius, range: 0.1...250, unit: "px", decimals: 1, logarithmic: true)
+                control(String(localized: "Radius"), \.radius, range: 0.1...250, unit: String(localized: "px"), decimals: 1, logarithmic: true)
             case .motionBlur:
-                control("Angle", \.angle, range: -90...90, unit: "°", decimals: 0, logarithmic: false)
-                control("Distance", \.distance, range: 1...2000, unit: "px", decimals: 0, logarithmic: true)
+                control(String(localized: "Angle"), \.angle, range: -90...90, unit: "°", decimals: 0, logarithmic: false)
+                control(String(localized: "Distance"), \.distance, range: 1...2000, unit: String(localized: "px"), decimals: 0, logarithmic: true)
             case .addNoise:
-                control("Amount", \.amount, range: 0.1...400, unit: "%", decimals: 1, logarithmic: true)
+                control(String(localized: "Amount"), \.amount, range: 0.1...400, unit: "%", decimals: 1, logarithmic: true)
                 HStack(spacing: 10) {
                     Text("Distribution")
                     Picker("Distribution", selection: flag(\.gaussian)) {
@@ -121,24 +121,24 @@ struct FilterSheet: View {
                     .help("Choose the vignette color")
                     Spacer()
                 }
-                control("Amount", \.vignetteAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Amount"), \.vignetteAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
                     .help("Blend the chosen color into the edges while keeping the center unchanged")
-                control("Midpoint", \.vignetteMidpoint, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Roundness", \.vignetteRoundness, range: -100...100, unit: "", decimals: 0, logarithmic: false)
-                control("Feather", \.vignetteFeather, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Highlights", \.vignetteHighlights, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Midpoint"), \.vignetteMidpoint, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Roundness"), \.vignetteRoundness, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+                control(String(localized: "Feather"), \.vignetteFeather, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Highlights"), \.vignetteHighlights, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
                     .help("Protect bright areas near the edge")
             case .bloomGlow:
-                control("Amount", \.bloomAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Radius", \.bloomRadius, range: 1...150, unit: "px", decimals: 0, logarithmic: true)
+                control(String(localized: "Amount"), \.bloomAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Radius"), \.bloomRadius, range: 1...150, unit: String(localized: "px"), decimals: 0, logarithmic: true)
             case .tonalContrast:
-                control("Amount", \.tonalAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Shadows", \.tonalShadows, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Midtones", \.tonalMidtones, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Highlights", \.tonalHighlights, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
-                control("Radius", \.tonalRadius, range: 1...100, unit: "px", decimals: 0, logarithmic: true)
+                control(String(localized: "Amount"), \.tonalAmount, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Shadows"), \.tonalShadows, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Midtones"), \.tonalMidtones, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Highlights"), \.tonalHighlights, range: -100...100, unit: "%", decimals: 0, logarithmic: false)
+                control(String(localized: "Radius"), \.tonalRadius, range: 1...100, unit: String(localized: "px"), decimals: 0, logarithmic: true)
             case .lensCorrection:
-                control("Remove Distortion", \.distortion, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+                control(String(localized: "Remove Distortion"), \.distortion, range: -100...100, unit: "", decimals: 0, logarithmic: false)
                 Text("Positive straightens lines that bow outward (barrel); negative, lines that bow inward (pincushion).")
                     .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
@@ -192,18 +192,18 @@ struct FilterSheet: View {
             }
         }
         if dither.style.usesPixelSize {
-        control("Pixel Size", \.dither.pixelSize, range: DitherSettings.pixelSizeRange, unit: "px", decimals: 0, logarithmic: false)
+        control(String(localized: "Pixel Size"), \.dither.pixelSize, range: DitherSettings.pixelSizeRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
             .help("Make each dithered pixel this many pixels across, for a chunky old-screen look")
         }
         if dither.style == .ascii {
-            control("Text Size", \.dither.textSize, range: DitherSettings.textSizeRange, unit: "px", decimals: 0, logarithmic: false)
+            control(String(localized: "Text Size"), \.dither.textSize, range: DitherSettings.textSizeRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
                 .help("The height of each line of characters")
         }
         if dither.style.isHalftone {
-            control("Cell Size", \.dither.cellSize, range: DitherSettings.cellSizeRange, unit: "px", decimals: 0, logarithmic: false)
+            control(String(localized: "Cell Size"), \.dither.cellSize, range: DitherSettings.cellSizeRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
         }
         if dither.style.isHalftone {
-            control("Angle", \.dither.angle, range: -90...90, unit: "°", decimals: 0, logarithmic: false)
+            control(String(localized: "Angle"), \.dither.angle, range: -90...90, unit: "°", decimals: 0, logarithmic: false)
         }
         if dither.style == .ascii {
             HStack(spacing: 10) {
@@ -214,16 +214,16 @@ struct FilterSheet: View {
             .help("The characters to draw with, in any order: each spot gets the one whose ink best matches its tone")
         }
         if dither.style.hasTones {
-            control("Tones", \.dither.levels, range: DitherSettings.levelsRange, unit: "", decimals: 0, logarithmic: false)
+            control(String(localized: "Tones"), \.dither.levels, range: DitherSettings.levelsRange, unit: "", decimals: 0, logarithmic: false)
                 .help("Tones per channel: 2 is pure black and white")
         }
         if dither.style.diffuses {
-            control("Diffusion", \.dither.diffusion, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+            control(String(localized: "Diffusion"), \.dither.diffusion, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
                 .help("How much of each pixel's error spreads to its neighbors. Less gives flatter areas")
         }
-        control("Density", \.dither.density, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+        control(String(localized: "Density"), \.dither.density, range: -100...100, unit: "", decimals: 0, logarithmic: false)
             .help("More ink (darker) or less before dithering")
-        control("Contrast", \.dither.contrast, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+        control(String(localized: "Contrast"), \.dither.contrast, range: -100...100, unit: "", decimals: 0, logarithmic: false)
         // A menu, like Style: the three choices as segments are wider than the panel, which then flips between
         // squeezing the row and wrapping it, resizing itself at every slider step.
         Picker("Colors", selection: Binding(get: { dither.colors }, set: { new in update { $0.dither.colors = new } })) {
@@ -233,9 +233,9 @@ struct FilterSheet: View {
         if dither.colors == .twoColors {
             HStack(spacing: 8) {
                 Text("Dark")
-                swatch(dither.dark, help: "Choose the dark color") { session.openDitherColorPicker(light: false) }
+                swatch(dither.dark, help: String(localized: "Choose the dark color")) { session.openDitherColorPicker(light: false) }
                 Text("Light").padding(.leading, 10)
-                swatch(dither.light, help: "Choose the light color") { session.openDitherColorPicker(light: true) }
+                swatch(dither.light, help: String(localized: "Choose the light color")) { session.openDitherColorPicker(light: true) }
                 Spacer()
             }
         }
@@ -254,28 +254,28 @@ struct FilterSheet: View {
 
     @ViewBuilder private var scanlinesControls: some View {
         let lines = settings.scanlines
-        control("Line Spacing", \.scanlines.lineSpacing, range: ScanlinesSettings.lineSpacingRange, unit: "px", decimals: 0, logarithmic: false)
+        control(String(localized: "Line Spacing"), \.scanlines.lineSpacing, range: ScanlinesSettings.lineSpacingRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
             .help("How far apart the screen's lines are")
-        control("Thickness", \.scanlines.thickness, range: 5...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Thickness"), \.scanlines.thickness, range: 5...100, unit: "%", decimals: 0, logarithmic: false)
             .help("How much of the gap a bright line fills; dimmer parts draw it thinner")
-        control("Glow", \.scanlines.glow, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Glow"), \.scanlines.glow, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
             .help("Light blooming around the lines, like a CRT's phosphors")
-        control("Dots", \.scanlines.dots, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Dots"), \.scanlines.dots, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
             .help("Break the lines into beads where the picture is darker than this, blending into solid lines where it's brighter")
-        control("Displace", \.scanlines.displace, range: ScanlinesSettings.displaceRange, unit: "px", decimals: 0, logarithmic: false)
+        control(String(localized: "Displace"), \.scanlines.displace, range: ScanlinesSettings.displaceRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
             .help("Lift the lines where the picture is bright, or lower them when negative, so they swell into its shapes")
-        control("Smoothness", \.scanlines.smoothness, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Smoothness"), \.scanlines.smoothness, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
             .help("How far the brightness is smoothed before it displaces the lines, from sharp ridges to rounded hills")
-        control("Threshold", \.scanlines.threshold, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Threshold"), \.scanlines.threshold, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
             .help("Draw no line where the picture is darker than this, leaving the screen dark")
-        control("Wobble", \.scanlines.wobble, range: ScanlinesSettings.wobbleRange, unit: "px", decimals: 0, logarithmic: false)
+        control(String(localized: "Wobble"), \.scanlines.wobble, range: ScanlinesSettings.wobbleRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
             .help("Make the lines waver sideways down the screen, like a CRT losing sync")
-        control("Color Split", \.scanlines.split, range: ScanlinesSettings.splitRange, unit: "px", decimals: 0, logarithmic: false)
+        control(String(localized: "Color Split"), \.scanlines.split, range: ScanlinesSettings.splitRange, unit: String(localized: "px"), decimals: 0, logarithmic: false)
             .help("Move the red and blue apart, for colored fringes on the lines")
-        control("Density", \.scanlines.density, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+        control(String(localized: "Density"), \.scanlines.density, range: -100...100, unit: "", decimals: 0, logarithmic: false)
             .help("Darker or lighter before the lines are drawn")
-        control("Contrast", \.scanlines.contrast, range: -100...100, unit: "", decimals: 0, logarithmic: false)
-        control("Black Level", \.scanlines.blackLevel, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
+        control(String(localized: "Contrast"), \.scanlines.contrast, range: -100...100, unit: "", decimals: 0, logarithmic: false)
+        control(String(localized: "Black Level"), \.scanlines.blackLevel, range: 0...100, unit: "%", decimals: 0, logarithmic: false)
             .help("How bright the lines are where the picture is black, so they show even over black")
         Picker("Colors", selection: Binding(get: { lines.colors }, set: { new in update { $0.scanlines.colors = new } })) {
             ForEach(DitherColors.allCases, id: \.self) { Text(L10n.text($0.rawValue)).tag($0) }
@@ -284,9 +284,9 @@ struct FilterSheet: View {
         if lines.colors == .twoColors {
             HStack(spacing: 8) {
                 Text("Dark")
-                swatch(lines.dark, help: "Choose the screen's color") { session.openDitherColorPicker(light: false) }
+                swatch(lines.dark, help: String(localized: "Choose the screen's color")) { session.openDitherColorPicker(light: false) }
                 Text("Light").padding(.leading, 10)
-                swatch(lines.light, help: "Choose the lines' color") { session.openDitherColorPicker(light: true) }
+                swatch(lines.light, help: String(localized: "Choose the lines' color")) { session.openDitherColorPicker(light: true) }
                 Spacer()
             }
         }
@@ -347,7 +347,7 @@ struct FilterSheet: View {
                                       set: { value in update { $0[keyPath: key] = ((logarithmic ? exp(value) : value) * step).rounded() / step } }),
                        in: logarithmic ? log(range.lowerBound)...log(range.upperBound) : range)
             }
-            TextField(title, value: Binding(get: { settings[keyPath: key] }, set: { value in update { $0[keyPath: key] = value } }),
+            TextField(L10n.text(title), value: Binding(get: { settings[keyPath: key] }, set: { value in update { $0[keyPath: key] = value } }),
                       format: .number.precision(.fractionLength(0...decimals)))
                 .frame(width: 56).textFieldStyle(.roundedBorder).multilineTextAlignment(.trailing)
                 .unitSuffix(unit)
@@ -371,8 +371,8 @@ struct GradientMapControls: View {
                 .overlay { RoundedRectangle(cornerRadius: 4, style: .continuous).strokeBorder(.black.opacity(0.35)) }
                 .accessibilityHidden(true)
             HStack(spacing: 20) {
-                swatch("Shadows", settings.shadows) { pick(false) }
-                swatch("Highlights", settings.highlights) { pick(true) }
+                swatch(String(localized: "Shadows"), settings.shadows) { pick(false) }
+                swatch(String(localized: "Highlights"), settings.highlights) { pick(true) }
                 Spacer()
             }
             Toggle("Reverse", isOn: $settings.reversed)

@@ -55,7 +55,7 @@ struct LayersPanel: View {
                 Spacer()
                 Button { session.deleteLayerOrMask() } label: { FooterIcon(systemName: "trash") }
                     .help(L10n.text(session.selectedEffect != nil ? "Delete selected effect" : session.isMaskSelected ? "Delete layer mask" : session.selectedLayerIDs.count > 1 ? "Delete selected layers" : "Delete selected layer"))
-                    .accessibilityLabel(session.selectedEffect != nil ? "Delete selected effect" : session.isMaskSelected ? "Delete layer mask" : session.selectedLayerIDs.count > 1 ? "Delete selected layers" : "Delete selected layer")
+                    .accessibilityLabel(session.selectedEffect != nil ? String(localized: "Delete selected effect") : session.isMaskSelected ? String(localized: "Delete layer mask") : session.selectedLayerIDs.count > 1 ? String(localized: "Delete selected layers") : String(localized: "Delete selected layer"))
                     .accessibilityIdentifier("deleteLayer")
                     .disabled(!session.layersLookEditable || session.activeLayer == nil)
             }

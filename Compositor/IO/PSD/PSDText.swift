@@ -28,7 +28,7 @@ nonisolated enum PSDText {
 
     static func missingFontNote(_ name: String) -> String? {
         guard NSFont(name: name, size: 12) == nil else { return nil }
-        return "The font “\(name)” isn’t installed, so the text was drawn with the system font."
+        return String(localized: "The font “\(name)” isn’t installed, so the text was drawn with the system font.")
     }
 
     static func parse(extra: [String: Data]) -> Source? {

@@ -28,11 +28,11 @@ import Sparkle
         let changes = Self.changes(in: appcastItem)
         if !changes.isEmpty { alert.accessoryView = Self.list(changes) }
         alert.addButton(withTitle: L10n.text(downloaded ? "Install and Relaunch" : "Install Update"))
-        alert.addButton(withTitle: L10n.text("Remind Me Later"))
-        alert.addButton(withTitle: L10n.text("Skip This Version"))
+        alert.addButton(withTitle: String(localized: "Remind Me Later"))
+        alert.addButton(withTitle: String(localized: "Skip This Version"))
         if let updater, updater.allowsAutomaticUpdates {
             alert.showsSuppressionButton = true
-            alert.suppressionButton?.title = L10n.text("Automatically download and install updates in the future")
+            alert.suppressionButton?.title = String(localized: "Automatically download and install updates in the future")
             alert.suppressionButton?.state = updater.automaticallyDownloadsUpdates ? .on : .off
         }
         alert.layout()
@@ -91,7 +91,7 @@ import Sparkle
         style.headIndent = 12
         style.paragraphSpacing = 4
         style.tabStops = [NSTextTab(textAlignment: .left, location: 12)]
-        let text = NSMutableAttributedString(string: L10n.text("What’s new") + "\n", attributes: [
+        let text = NSMutableAttributedString(string: String(localized: "What’s new") + "\n", attributes: [
             .font: NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold),
             .foregroundColor: NSColor.labelColor, .paragraphStyle: style,
         ])

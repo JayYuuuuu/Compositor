@@ -15,7 +15,7 @@ struct ColorRangeSheet: View {
                         .background(edit?.effectiveMode == mode ? Color.accentColor.opacity(0.25) : .clear,
                                     in: RoundedRectangle(cornerRadius: 4))
                         .help(help(mode))
-                        .accessibilityLabel("\(mode.rawValue) color")
+                        .accessibilityLabel("\(L10n.text(mode.rawValue)) color")
                 }
                 Spacer()
             }
@@ -72,9 +72,9 @@ struct ColorRangeSheet: View {
 
     private func help(_ mode: HueSampleMode) -> String {
         switch mode {
-        case .replace: "Click the image to select that color"
-        case .add: "Click the image to add that color to the selection"
-        case .remove: "Click the image to take that color out of the selection"
+        case .replace: String(localized: "Click the image to select that color")
+        case .add: String(localized: "Click the image to add that color to the selection")
+        case .remove: String(localized: "Click the image to take that color out of the selection")
         }
     }
 

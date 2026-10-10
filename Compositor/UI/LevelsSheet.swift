@@ -27,20 +27,20 @@ struct LevelsSheet: View {
                 handles(output: false).frame(height: 20)
             }
             HStack {
-                field("Input black", value(\.black), decimals: 0)
+                field(String(localized: "Input black"), value(\.black), decimals: 0)
                 Spacer()
-                field("Gamma", value(\.gamma), decimals: 2)
+                field(String(localized: "Gamma"), value(\.gamma), decimals: 2)
                 Spacer()
-                field("Input white", value(\.white), decimals: 0)
+                field(String(localized: "Input white"), value(\.white), decimals: 0)
             }
             VStack(spacing: 0) {
                 LinearGradient(colors: [.black, .white], startPoint: .leading, endPoint: .trailing).frame(height: 14)
                 handles(output: true).frame(height: 20)
             }
             HStack {
-                field("Output black", value(\.outputBlack), decimals: 0)
+                field(String(localized: "Output black"), value(\.outputBlack), decimals: 0)
                 Spacer()
-                field("Output white", value(\.outputWhite), decimals: 0)
+                field(String(localized: "Output white"), value(\.outputWhite), decimals: 0)
             }
             HStack {
                 Text("Sample").font(.caption).foregroundStyle(.secondary)
@@ -89,7 +89,7 @@ struct LevelsSheet: View {
     private func field(_ name: String, _ binding: Binding<Double>, decimals: Int) -> some View {
         let range: ClosedRange<Double> = name == "Gamma" ? 0.1...9.99 : 0...255
         return VStack(alignment: .leading, spacing: 5) {
-            Text(name).font(.caption).foregroundStyle(.secondary)
+            Text(L10n.text(name)).font(.caption).foregroundStyle(.secondary)
                 .scrubbable(sensitivity: decimals == 0 ? 1 : 0.01, value: binding, range: range)
             TextField(name, value: binding, format: .number.precision(.fractionLength(decimals)))
                 .textFieldStyle(.roundedBorder).multilineTextAlignment(.trailing).frame(width: 80)
@@ -139,7 +139,7 @@ struct LevelsSheet: View {
                                 $0.current = range
                             }
                         })
-                    .accessibilityLabel(names[index])
+                    .accessibilityLabel(L10n.text(names[index]))
             }
         }.coordinateSpace(name: output ? "levelsOutput" : "levelsInput")
     }

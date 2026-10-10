@@ -10,5 +10,6 @@
   "product_name": "Compositor CN",
   "bundle_id": "com.jayyuuuuu.compositor.cn",
   "channel": "community-test",
-  "notarized": false
+  "notarized": false,
+  "release_notes": "补齐 RAW 高级面板、动态操作提示、快捷键设置与搜索、PSD 转换和错误提示，保留英文。品牌、字体名、文件名、用户内容和标准缩写保持原样。"
 }

@@ -32,6 +32,43 @@ def unique_object(pairs):
     return result
 
 
+
+def dynamic_display_keys(source_root):
+    """Closed source strings used by runtime display lookups; never scan user content or serialized values."""
+    keys = set()
+    literal = re.compile(r'"([^"\\]*)"')
+    for path in (source_root / "Compositor").rglob("*.swift"):
+        source = path.read_text()
+        for match in re.finditer(r'L10n\.(?:text|format)\(', source):
+            depth, quoted, end = 1, False, match.end()
+            while end < len(source) and depth:
+                char = source[end]
+                if char == "\\" and quoted:
+                    end += 2; continue
+                if char == '"': quoted = not quoted
+                if not quoted:
+                    if char == "(": depth += 1
+                    elif char == ")": depth -= 1
+                end += 1
+            for value in literal.findall(source[match.end():end - 1]):
+                if re.search(r"[A-Za-z]", value): keys.add(value)
+        # Explicit raw values of these iterable enums are UI choices, not rewritten model data.
+        for match in re.finditer(r'enum \w+: [^{]*String[^\{]*CaseIterable[^\{]*\{', source):
+            declarations = re.split(r'\b(?:var|let|func|init)\b|\}', source[match.end():], 1)[0]
+            keys.update(re.findall(r'\w+\s*=\s*"([^"\\]+)"', declarations))
+        # History names are app actions looked up when composing Undo/Redo.
+        for match in re.finditer(r'beginEdit\(([^\n]*)', source):
+            keys.update(value for value in literal.findall(match[1]) if re.search(r"[A-Za-z]", value))
+    # Keyboard labels are fixed English identities; only their display is localized.
+    shortcuts = (source_root / "Compositor/UI/KeyboardShortcuts.swift").read_text()
+    fixed = shortcuts[shortcuts.index("static let all:"):shortcuts.index("@MainActor @Observable")]
+    keys.update(re.findall(r'entry\("([^"\\]+)"', fixed))
+    keys.update(re.findall(r'\("([^"\\]+)", "', fixed))
+    keys.update(re.findall(r'title: "([^"\\]+)"', fixed))
+    keys.update(["Menus", "Canvas & Layers", "Text Editing"])
+    return keys
+
+
 def main():
     # Positive and negative controls prove the placeholder check before accepting a clean result.
     assert placeholders("%lld %@") == placeholders("%2$@ %1$lld")
@@ -39,6 +76,8 @@ def main():
     assert placeholders("100%%") == {}
     catalog = json.loads(CATALOG.read_text(), object_pairs_hook=unique_object)
     assert catalog["sourceLanguage"] == "en"
+    missing = dynamic_display_keys(CATALOG.parents[1]) - catalog["strings"].keys()
+    assert not missing, ("Uncataloged dynamic display strings", sorted(missing))
     for key, entry in catalog["strings"].items():
         for language in ("en", "zh-Hans"):
             unit = entry["localizations"][language]["stringUnit"]

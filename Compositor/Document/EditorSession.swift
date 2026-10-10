@@ -692,8 +692,8 @@ final class EditorSession {
         guard canEditLayers, let document else { return }
         let names = Set(document.layers.map(\.name))
         var number = 1
-        while names.contains("Layer \(number)") { number += 1 }
-        var layer = ImageLayer(name: "Layer \(number)", blankSize: document.size)
+        while names.contains(String(localized: "Layer \(number)")) { number += 1 }
+        var layer = ImageLayer(name: String(localized: "Layer \(number)"), blankSize: document.size)
         layer.parentID = activeLayer?.isGroup == true ? activeLayerID : activeLayer?.parentID
         if let parent = layer.parentID { collapsedGroupIDs.remove(parent) }
         var insertion = document.layers.firstIndex { $0.id == activeLayerID }.map { $0 + 1 } ?? document.layers.count
@@ -989,7 +989,7 @@ final class EditorSession {
         activeLayerID = group.id
     }
 
-    /// `emptyLayer` starts the canvas with a selected blank "Layer 1", as File > New does.
+    /// `emptyLayer` starts the canvas with a selected blank String(localized: "Layer 1"), as File > New does.
     /// `background`: white or black fills the first layer, named Background as in Photoshop; nil leaves it transparent.
     func createDocument(width: Int, height: Int, emptyLayer: Bool = false, resolution: Double = 72, background: CGColor? = nil) {
         guard !isProjectBusy, !isImporting, (1...DocumentLimits.maxSide).contains(width), (1...DocumentLimits.maxSide).contains(height) else { return }
@@ -1010,11 +1010,11 @@ final class EditorSession {
     /// every pixel's detail.
     private static func firstLayer(size: CGSize, background: CGColor?) -> ImageLayer {
         guard let background, let context = try? BrushRaster.context(width: Int(size.width), height: Int(size.height), mask: false)
-        else { return ImageLayer(name: "Layer 1", blankSize: size) }
+        else { return ImageLayer(name: String(localized: "Layer 1"), blankSize: size) }
         context.setFillColor(background)
         context.fill(CGRect(origin: .zero, size: size))
         guard let image = context.makeImage(), let thumbnail = try? PixelAdjust.thumbnail(of: image)
-        else { return ImageLayer(name: "Layer 1", blankSize: size) }
+        else { return ImageLayer(name: String(localized: "Layer 1"), blankSize: size) }
         var layer = ImageLayer(name: "Background", blankSize: size)
         layer.asset = ImportedImage(image: image, thumbnail: thumbnail, name: "Background")
         return layer

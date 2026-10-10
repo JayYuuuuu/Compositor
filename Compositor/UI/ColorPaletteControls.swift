@@ -69,7 +69,7 @@ struct ColorPaletteControls: View {
                 .frame(width: swatchSize, height: swatchSize)
                 .contentShape(shape)
         }
-        .buttonStyle(.plain).help(label).accessibilityLabel(label)
+        .buttonStyle(.plain).help(L10n.text(label)).accessibilityLabel(L10n.text(label))
     }
     private func chooseMask(_ color: PaletteColor) {
         guard let background = choosingMaskBackground else { return }

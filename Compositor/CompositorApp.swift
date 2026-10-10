@@ -39,9 +39,9 @@ struct CompositorApp: App {
                         }
                             .configuredKeyboardShortcut("z", modifiers: [.command, .shift])
                     } else {
-                        Button(session.history.canUndo ? L10n.format("Undo %@", L10n.text(session.history.undoName)) : L10n.text("Undo")) { session.undo() }
+                        Button(session.history.canUndo ? L10n.format("Undo %@", L10n.text(session.history.undoName)) : String(localized: "Undo")) { session.undo() }
                             .configuredKeyboardShortcut("z").disabled(!session.canUndo)
-                        Button(session.history.canRedo ? L10n.format("Redo %@", L10n.text(session.history.redoName)) : L10n.text("Redo")) { session.redo() }
+                        Button(session.history.canRedo ? L10n.format("Redo %@", L10n.text(session.history.redoName)) : String(localized: "Redo")) { session.redo() }
                             .configuredKeyboardShortcut("z", modifiers: [.command, .shift]).disabled(!session.canRedo)
                     }
                 }
@@ -301,7 +301,7 @@ struct CompositorApp: App {
                     }
                 }
                 CommandMenu("Filter") {
-                    Button(session.lastFilter.map { L10n.format("Last Filter: %@", L10n.text($0.rawValue)) } ?? L10n.text("Last Filter")) {
+                    Button(session.lastFilter.map { L10n.format("Last Filter: %@", L10n.text($0.rawValue)) } ?? String(localized: "Last Filter")) {
                         Task { await session.repeatLastFilter() }
                     }
                         // ⌃⌘F, as in Photoshop; ⌘F is the command palette.

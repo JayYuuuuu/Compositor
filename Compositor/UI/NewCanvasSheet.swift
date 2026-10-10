@@ -74,7 +74,7 @@ struct NewCanvasSheet: View {
     private var valid: Bool { pixelWidth != nil && pixelHeight != nil }
     private var resolutionHelp: String {
         let size = unit != .pixels ? pixelWidth.flatMap { w in pixelHeight.map { h in L10n.format(" · %lld DPI: %lld × %lld pixels", Int(resolution), w, h) } } : nil
-        return L10n.text("Resolution: 72 for screens, 300 for print. Click to switch.") + (size ?? "")
+        return String(localized: "Resolution: 72 for screens, 300 for print. Click to switch.") + (size ?? "")
     }
     /// Shows the sizes in another unit, the same canvas written differently.
     private func switchUnit(to new: NewCanvasUnit) {
