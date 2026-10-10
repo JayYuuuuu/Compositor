@@ -71,3 +71,11 @@ DeepSeek 原生提取增量本轮发现 193 条待译文字，5 次接口调用�
 用户确认仅维护中文汉化、跟进上游及社区发布，不做旧 macOS 兼容适配。当前沿用上游 Apple Silicon、macOS 26.0 及以上要求。最新已验证版本为 `v1.4.9-cn.2`；没有新增兼容分支或修改最低系统版本。
 
 收尾时实际核对：调度器运行，已加载每天北京时间 06:17 的维护任务；调用的私有入口带自动发布参数。发现新的上游正式版时自动合并、提取与增量翻译、检查、Mac 测试、打包并发布社区测试版及签名更新源；不跟随每次源码提交，无上游新版本不重新翻译或发布。合并冲突、翻译不确定、新增文字超出自动处理上限、测试/构建失败、发布期间主分支变化时停止，保留失败记录供维护者处理；不能承诺每个上游版本都无需人工介入。当前已经跑通本次社区修订的完整维护/发布入口，未来新的上游正式版事件仍须以实际运行记录为准。
+
+## 发布启动崩溃修复（v1.4.9-cn.3，验证中）
+
+用户在 mac24g 的 macOS 27.0.1 安装 CN2 后启动崩溃。实际复现退出码 SIGABRT，动态加载器拒绝 Sparkle：应用及嵌入框架均为 ad-hoc、无 Team ID，Release 开启 Hardened Runtime，缺少允许这种内嵌库签名的权限。此前 Debug 界面测试及 codesign 完整性检查都通过，但没有测试发布配置的实际启动；这项缺口不能当作发布应用已经正常启动。
+
+社区测试版 Release 使用单独的 CommunityTest.entitlements，仅增加库验证例外，保留 App Sandbox 与 Hardened Runtime；Debug 及原基础权限文件不变。修复同一 CN2 应用副本后，实际启动完成且创建窗口。参考 [Apple 库验证说明](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.security.cs.disable-library-validation)。未来正式 Developer ID 签名方案须重新审查这项社区签名例外。
+
+新增实际 Release 启动回归：确认进程持续运行、系统确认启动完成并出现应用窗口；云端 Mac Verify 工作流及实际打包 worker 均执行，发布入口拒绝缺少启动凭据的安装包。启动验证只关闭由测试创建的进程，不操作他人的编辑会话；仍不把启动验证等同全功能验收。

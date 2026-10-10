@@ -11,5 +11,5 @@
   "bundle_id": "com.jayyuuuuu.compositor.cn",
   "channel": "community-test",
   "notarized": false,
-  "release_notes": "补齐 RAW 高级面板、动态操作提示、快捷键设置与搜索、PSD 转换和错误提示，保留英文。品牌、字体名、文件名、用户内容和标准缩写保持原样。"
+  "release_notes": "修复社区测试包因内置更新组件签名验证而启动崩溃的问题；新增发布包实际启动检查。保留现有中英文界面、沙箱和运行时保护。"
 }

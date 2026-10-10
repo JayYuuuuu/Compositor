@@ -86,6 +86,46 @@ jobs:
           retention-days: 7
           if-no-files-found: ignore
 
+  release-launch:
+    name: release-launch
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name != github.repository
+    runs-on: macos-26
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Select Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app
+
+      - name: Build the distributed Release configuration
+        run: >
+          xcodebuild build
+          -project Compositor.xcodeproj
+          -scheme Compositor
+          -destination 'platform=macOS,arch=arm64'
+          -configuration Release
+          -derivedDataPath ReleaseDerivedData
+          CODE_SIGN_IDENTITY=-
+          CODE_SIGN_STYLE=Manual
+          DEVELOPMENT_TEAM=
+          ARCHS=arm64
+          ONLY_ACTIVE_ARCH=YES
+
+      - name: Verify Release signature and actual startup
+        run: |
+          codesign --verify --deep --strict "ReleaseDerivedData/Build/Products/Release/Compositor CN.app"
+          python3 scripts/verify-release-launch.py --app "ReleaseDerivedData/Build/Products/Release/Compositor CN.app" --output release-launch.json
+
+      - name: Upload Release launch receipt
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-launch-receipt
+          path: release-launch.json
+          retention-days: 7
+          if-no-files-found: ignore
+
   localization-ui:
     name: localization-ui
     if: github.event_name == 'workflow_dispatch' && inputs.run_ui
