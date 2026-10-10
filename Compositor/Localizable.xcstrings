@@ -13952,7 +13952,6 @@
     },
     "Camera Raw Light": {
       "comment": "Tonal adjustment panel, not a light color swatch.",
-      "extractionState": "extracted_with_value",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -19825,7 +19824,7 @@
       }
     },
     "(Multiple)": {
-      "comment": "Font picker selection spans multiple fonts; display placeholder only, identifier is separate.",
+      "comment": "Font picker placeholder when selected text contains multiple fonts; not a font name.",
       "localizations": {
         "en": {
           "stringUnit": {
