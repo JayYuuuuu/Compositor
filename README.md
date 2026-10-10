@@ -2,7 +2,7 @@
 
 社区简体中文分支，基于 [上游 Compositor](https://github.com/robbietilton/Compositor)，保留英文。独立应用，可与原版共存，更新仅来自本 fork。
 
-**社区测试版：ad-hoc 签名，未获 Apple Developer ID 签名或公证，macOS 安装时可能出现安全提示。** 需要 Apple silicon 和 macOS 26 或更新版本；部分高级工具仍可能显示英文。
+**社区测试版：ad-hoc 签名，未获 Apple Developer ID 签名或公证，macOS 安装时可能出现安全提示。** 需要 Apple silicon 和 macOS 26 或更新版本。界面文字已补齐，品牌、用户内容和标准缩写保留原样。
 
 安装包与校验值见 [社区 Releases](https://github.com/JayYuuuuu/Compositor/releases)。将 Compositor CN.app 拖入 Applications；只在确认下载自本项目后，通过系统设置的“隐私与安全性”允许该应用，不要关闭全局安全检查。
 
