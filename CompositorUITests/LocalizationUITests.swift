@@ -83,7 +83,11 @@ final class LocalizationUITests: XCTestCase {
             app.menuItems[label("Export PNG…", "导出 PNG…")].click()
             save(to: folder, name: "localized-output.png", in: app)
             let output = folder.appendingPathComponent("localized-output.png")
-            XCTAssertTrue(FileManager.default.fileExists(atPath: output.path))
+            let pngWritten = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                guard let data = try? Data(contentsOf: output) else { return false }
+                return NSBitmapImageRep(data: data) != nil
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [pngWritten], timeout: 10), .completed)
             let exported = try XCTUnwrap(NSBitmapImageRep(data: try Data(contentsOf: output)))
             XCTAssertEqual(exported.pixelsWide, 64)
             XCTAssertEqual(exported.pixelsHigh, 32)
@@ -98,7 +102,10 @@ final class LocalizationUITests: XCTestCase {
             app.typeKey("s", modifierFlags: .command)
             save(to: folder, name: "localized-project.comp", in: app)
             let project = folder.appendingPathComponent("localized-project.comp")
-            XCTAssertTrue(FileManager.default.fileExists(atPath: project.appendingPathComponent("manifest.json").path))
+            let projectWritten = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                FileManager.default.fileExists(atPath: project.appendingPathComponent("manifest.json").path)
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [projectWritten], timeout: 10), .completed)
             file.click()
             app.menuItems[label("Close Project", "关闭项目")].click()
             file.click()
